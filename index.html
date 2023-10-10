@@ -46,5 +46,11 @@
     <div id="output"></div>
 
     <script src="script.js"></script>
+    <script>
+        window.onload = function() {
+            // Ensure the translate function and other JS logic is available after full page load
+            document.querySelector("button").addEventListener("click", translate);
+        }
+    </script>
 </body>
 </html>
