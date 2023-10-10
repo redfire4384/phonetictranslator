@@ -42,8 +42,35 @@ const SYMBOLS = {
 };
 
 function parsePhoneticWord(word) {
-    return word.split(' ');
+    const chunks = [];
+
+    for (let i = 0; i < word.length; i++) {
+        let char = word[i];
+        
+        // If it's the first character and it's a consonant, make it uppercase
+        if (i === 0 && ['d', 's', 'l', 'b', 'n', 'h', 't', 'c', 'r', 'j', 'th', 'v', 'sh', 'thi', 'm'].includes(char)) {
+            char = char.toUpperCase();
+        }
+
+        // Handle special cases (e.g., 'th' and 'thi')
+        if (char === 't' && word[i + 1] === 'h') {
+            if (word[i + 2] === 'i') {
+                char = 'thi';
+                i += 2; // Jump ahead by two characters
+            } else {
+                char = 'th';
+                i++; // Jump ahead by one character
+            }
+        }
+
+        // Add other special parsing cases as needed
+
+        chunks.push(char);
+    }
+
+    return chunks;
 }
+
 
 function getSymbolCoordinates(chunk) {
     return SYMBOLS[chunk] || { x: 0, y: 0 }; // Default to 0,0 if symbol not found
