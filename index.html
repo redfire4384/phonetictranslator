@@ -2,50 +2,48 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Phonetic Translator</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f4f4f4;
-        }
-
-        .container {
             text-align: center;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
         }
 
-        .output {
+        #inputBox {
+            width: 200px;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        #output {
+            display: flex;
+            flex-direction: row;
             margin-top: 20px;
+            align-items: center;
+            justify-content: center;
         }
 
-        /* These styles are for displaying the symbols from the sprite */
         .symbol {
-            display: inline-block;
-            width: 220px; /* Default for lower-case or vowels */
-            height: 220px; /* Default for lower-case or vowels */
             background-image: url('images.png');
-            background-repeat: no-repeat;
+            background-size: 2332px 1540px;
+            width: 220px;
+            height: 220px;
+            display: inline-block;
         }
 
-        .uppercase {
-            height: 484px; /* Adjusting for uppercase symbols */
+        .symbol.uppercase {
+            height: 440px; /* Twice the regular height */
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Phonetic Translator</h1>
-        <input type="text" id="inputWord" placeholder="Enter your word or sentence">
-        <button onclick="translate()">Translate</button>
-        <div id="output" class="output"></div>
-    </div>
+    <h1>Phonetic Translator</h1>
+    <input type="text" id="inputWord" placeholder="Enter word">
+    <button onclick="translate()">Translate</button>
+    <div id="output"></div>
 
     <script src="script.js"></script>
 </body>
