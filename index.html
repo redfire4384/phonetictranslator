@@ -4,7 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Phonetic Translator</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .output {
+            margin-top: 20px;
+        }
+
+        /* These styles are for displaying the symbols from the sprite */
+        .symbol {
+            display: inline-block;
+            width: 220px; /* Default for lower-case or vowels */
+            height: 220px; /* Default for lower-case or vowels */
+            background-image: url('images.png');
+            background-repeat: no-repeat;
+        }
+
+        .uppercase {
+            height: 484px; /* Adjusting for uppercase symbols */
+        }
+    </style>
 </head>
 <body>
     <div class="container">
