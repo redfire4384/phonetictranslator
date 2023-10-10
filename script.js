@@ -60,7 +60,7 @@ function renderPhoneticImages(phoneticWord) {
 
         for (const phonetic of column) {
             const img = document.createElement("img");
-            img.src = `${phonetic}.png`;
+            img.src = `./images/${phonetic}.png`;
             img.classList.add("phonetic-img");
             img.style.left = `${xOffset}px`;
             img.style.top = `${yOffset}px`;
