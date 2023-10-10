@@ -42,38 +42,49 @@ const SYMBOLS = {
 };
 
 function parsePhoneticWord(word) {
-    const chunks = [];
+    const phonetics = ["ah", "ee", "uh", "ae", "ie", "ih", "aw", "eh", "ue", 
+                       "d", "s", "l", "b", "n", "h", "t", "c", "r", 
+                       "j", "th", "v", "sh", "thi", "m",
+                       "D", "S", "L", "B", "N", "H", "T", "C", "R"];
 
-    for (let i = 0; i < word.length; i++) {
-        let char = word[i];
-        
-        // If it's the first character and it's a consonant, make it uppercase
-        if (i === 0 && ['d', 's', 'l', 'b', 'n', 'h', 't', 'c', 'r', 'j', 'th', 'v', 'sh', 'thi', 'm'].includes(char)) {
-            char = char.toUpperCase();
+    let chunks = [];
+
+    // Process initial consonant or vowel
+    if (phonetics.includes(word.charAt(0).toUpperCase())) {
+        // If it's a vowel, it goes to the bottom
+        if ("aeiou".includes(word.charAt(0))) {
+            chunks.push(word.charAt(0));
+            word = word.substring(1);
+        } else {
+            // If it's a consonant, capitalize it
+            chunks.push(word.charAt(0).toUpperCase());
+            word = word.substring(1);
         }
+    }
 
-        // Handle special cases (e.g., 'th' and 'thi')
-        if (char === 't' && word[i + 1] === 'h') {
-            if (word[i + 2] === 'i') {
-                char = 'thi';
-                i += 2; // Jump ahead by two characters
-            } else {
-                char = 'th';
-                i++; // Jump ahead by one character
+    // Iterate through the word and identify phonetic chunks
+    while (word.length > 0) {
+        let found = false;
+        for (let phonetic of phonetics) {
+            if (word.startsWith(phonetic)) {
+                chunks.push(phonetic);
+                word = word.substring(phonetic.length);
+                found = true;
+                break;
             }
         }
 
-        // Add other special parsing cases as needed
-
-        chunks.push(char);
+        // If no phonetic chunk matches, skip a character (you can handle this differently if needed)
+        if (!found) {
+            word = word.substring(1);
+        }
     }
 
     return chunks;
 }
 
-
 function getSymbolCoordinates(chunk) {
-    return SYMBOLS[chunk] || { x: 0, y: 0 }; // Default to 0,0 if symbol not found
+    return SYMBOLS[chunk] || { x: 0, y: 0 }; // If not found, return default coordinates
 }
 
 function translate() {
@@ -95,3 +106,6 @@ function translate() {
         outputDiv.appendChild(symbolDiv);
     });
 }
+
+// Event listener to ensure the function gets called when the button is clicked
+document.getElementById("translateButton").addEventListener("click", translate);
