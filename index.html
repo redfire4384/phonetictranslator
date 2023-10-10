@@ -3,26 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Phonetic Translator</title>
-    <style>
-        /* Adjust these styles as per your requirements */
-        .container {
-            position: relative;
-            display: inline-block;
-            margin-top: 20px;
-        }
-        .phonetic-img {
-            position: absolute;
-        }
-    </style>
+    <title>Phonetic Translator</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h2>Phonetic Translator</h2>
-    <label for="phoneticInput">Enter Phonetics:</label>
-    <input type="text" id="phoneticInput">
-    <button onclick="renderFromInput()">Translate</button>
-
-    <div class="container" id="output"></div>
+    <div class="container">
+        <h1>Phonetic Translator</h1>
+        <input type="text" id="inputWord" placeholder="Enter your word or sentence">
+        <button onclick="translate()">Translate</button>
+        <div id="output" class="output"></div>
+    </div>
 
     <script src="script.js"></script>
 </body>
