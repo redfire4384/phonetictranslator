@@ -36,6 +36,19 @@ function translateToMatrix(phoneticWord) {
     return matrix;
 }
 
+function clearOutput() {
+    const output = document.getElementById("output");
+    while (output.firstChild) {
+        output.removeChild(output.firstChild);
+    }
+}
+
+function renderFromInput() {
+    clearOutput(); // Clear previous translation
+    const phoneticWord = document.getElementById("phoneticInput").value;
+    renderPhoneticImages(phoneticWord);
+}
+
 // Function to render the phonetic matrix as images
 function renderPhoneticImages(phoneticWord) {
     const output = document.getElementById("output");
@@ -59,9 +72,3 @@ function renderPhoneticImages(phoneticWord) {
         xOffset += 12;  // Width of one image (including potential gap)
     }
 }
-
-// Event listener to execute when the document is fully loaded
-document.addEventListener("DOMContentLoaded", function() {
-    const phoneticWord = "yourPhoneticWord";  // Replace with the word you want to translate
-    renderPhoneticImages(phoneticWord);
-});
