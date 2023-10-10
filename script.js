@@ -41,6 +41,14 @@ const SYMBOLS = {
     "R": { x: 3872, y: 1056 }
 };
 
+function parsePhoneticWord(word) {
+    return word.split(' ');
+}
+
+function getSymbolCoordinates(chunk) {
+    return SYMBOLS[chunk] || { x: 0, y: 0 }; // Default to 0,0 if symbol not found
+}
+
 function translate() {
     const inputWord = document.getElementById('inputWord').value;
     const chunks = parsePhoneticWord(inputWord);
