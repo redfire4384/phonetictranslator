@@ -9,6 +9,7 @@
         .container {
             position: relative;
             display: inline-block;
+            margin-top: 20px;
         }
         .phonetic-img {
             position: absolute;
@@ -16,6 +17,11 @@
     </style>
 </head>
 <body>
+    <h2>Phonetic Translator</h2>
+    <label for="phoneticInput">Enter Phonetics:</label>
+    <input type="text" id="phoneticInput">
+    <button onclick="renderFromInput()">Translate</button>
+
     <div class="container" id="output"></div>
 
     <script src="script.js"></script>
