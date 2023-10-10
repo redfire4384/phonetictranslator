@@ -1,74 +1,62 @@
-// translateToMatrix function
-function translateToMatrix(phoneticWord) {
-    const alwaysUppercase = ['j', 'th', 'm', 'sh', 'v'];
-    const vowels = ['ah', 'ae', 'aw', 'ee', 'ie', 'eh', 'uh', 'ih', 'ue'];
-    const consonants = ['d', 'b', 't', 's', 'n', 'c', 'l', 'h', 'r', 'j'];
+const SYMBOLS = {
+    // Vowels
+    "ah": { x: 0, y: 0 },
+    "ee": { x: 264, y: 0 },
+    "uh": { x: 528, y: 0 },
+    "ae": { x: 792, y: 0 },
+    "ie": { x: 1056, y: 0 },
+    "ih": { x: 1320, y: 0 },
+    "aw": { x: 1584, y: 0 },
+    "eh": { x: 1848, y: 0 },
+    "ue": { x: 2112, y: 0 },
 
-    let matrix = [];
-    let i = 0;
+    // Lowercase consonants
+    "d": { x: 0, y: 264 },
+    "s": { x: 264, y: 264 },
+    "l": { x: 528, y: 264 },
+    "b": { x: 792, y: 264 },
+    "n": { x: 1056, y: 264 },
+    "h": { x: 1320, y: 264 },
+    "t": { x: 1584, y: 264 },
+    "c": { x: 1848, y: 264 },
+    "r": { x: 2112, y: 264 },
 
-    while (i < phoneticWord.length) {
-        let currentPhonetic = phoneticWord[i];
-        let nextPhonetic = phoneticWord[i + 1] || null;
+    // Special consonants (Always Uppercase)
+    "j": { x: 0, y: 528 },
+    "th": { x: 484, y: 528 },    // As in "the"
+    "v": { x: 968, y: 528 },
+    "sh": { x: 1452, y: 528 },
+    "thi": { x: 1936, y: 528 },  // As in "thistle"
+    "m": { x: 2420, y: 528 },
 
-        // Check for two-letter phonetics
-        if (i < phoneticWord.length - 1 && (vowels.includes(currentPhonetic + nextPhonetic) || alwaysUppercase.includes(currentPhonetic + nextPhonetic))) {
-            currentPhonetic += nextPhonetic;
-            i++;
+    // Uppercase consonants
+    "D": { x: 0, y: 1056 },
+    "S": { x: 484, y: 1056 },
+    "L": { x: 968, y: 1056 },
+    "B": { x: 1452, y: 1056 },
+    "N": { x: 1936, y: 1056 },
+    "H": { x: 2420, y: 1056 },
+    "T": { x: 2904, y: 1056 },
+    "C": { x: 3388, y: 1056 },
+    "R": { x: 3872, y: 1056 }
+};
+
+function translate() {
+    const inputWord = document.getElementById('inputWord').value;
+    const chunks = parsePhoneticWord(inputWord);
+    const outputDiv = document.getElementById('output');
+    outputDiv.innerHTML = '';  // Clear previous output
+
+    chunks.forEach(chunk => {
+        const coords = getSymbolCoordinates(chunk);
+        
+        const symbolDiv = document.createElement('div');
+        symbolDiv.classList.add('symbol');
+        if (chunk === chunk.toUpperCase() && SYMBOLS[chunk]) {  // Uppercase letter check
+            symbolDiv.classList.add('uppercase');
         }
 
-        // Decide if current phonetic is uppercase
-        let isUppercase = alwaysUppercase.includes(currentPhonetic);
-        if (i === 0 && consonants.includes(currentPhonetic)) {
-            isUppercase = true;
-        }
-
-        // Add to the matrix
-        if (matrix.length === 0 || matrix[matrix.length - 1].length === 2 || isUppercase) {
-            matrix.push([isUppercase ? currentPhonetic.toUpperCase() : currentPhonetic]);
-        } else {
-            matrix[matrix.length - 1].push(isUppercase ? currentPhonetic.toUpperCase() : currentPhonetic);
-        }
-
-        i++;
-    }
-
-    return matrix;
-}
-
-function clearOutput() {
-    const output = document.getElementById("output");
-    while (output.firstChild) {
-        output.removeChild(output.firstChild);
-    }
-}
-
-function renderFromInput() {
-    clearOutput(); // Clear previous translation
-    const phoneticWord = document.getElementById("phoneticInput").value;
-    renderPhoneticImages(phoneticWord);
-}
-
-// Function to render the phonetic matrix as images
-function renderPhoneticImages(phoneticWord) {
-    const output = document.getElementById("output");
-    const matrix = translateToMatrix(phoneticWord);
-
-    let xOffset = 0;
-    for (const column of matrix) {
-        let yOffset = column.length === 1 && column[0] === column[0].toUpperCase() ? 6 : 0;  // Centering uppercase letters
-
-        for (const phonetic of column) {
-            const img = document.createElement("img");
-            img.src = `./images/${phonetic}.png`;
-            img.classList.add("phonetic-img");
-            img.style.left = `${xOffset}px`;
-            img.style.top = `${yOffset}px`;
-            output.appendChild(img);
-
-            yOffset += phonetic === phonetic.toUpperCase() ? 12 : 12;  // Adjusting for the gap
-        }
-
-        xOffset += 12;  // Width of one image (including potential gap)
-    }
+        symbolDiv.style.backgroundPosition = `-${coords.x}px -${coords.y}px`;
+        outputDiv.appendChild(symbolDiv);
+    });
 }
