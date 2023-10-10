@@ -50,15 +50,16 @@ function parsePhoneticWord(word) {
     let chunks = [];
 
     // Process initial consonant or vowel
-    if (phonetics.includes(word.charAt(0).toUpperCase())) {
-        // If it's a vowel, it goes to the bottom
-        if ("aeiou".includes(word.charAt(0))) {
-            chunks.push(word.charAt(0));
-            word = word.substring(1);
-        } else {
-            // If it's a consonant, capitalize it
-            chunks.push(word.charAt(0).toUpperCase());
-            word = word.substring(1);
+    for (let phonetic of phonetics) {
+        if (word.startsWith(phonetic)) {
+            // Handle capitalization for initial consonants
+            if (phonetic.length === 1 && !"aeiou".includes(phonetic)) {
+                chunks.push(phonetic.toUpperCase());
+            } else {
+                chunks.push(phonetic);
+            }
+            word = word.substring(phonetic.length);
+            break;
         }
     }
 
@@ -82,6 +83,7 @@ function parsePhoneticWord(word) {
 
     return chunks;
 }
+
 
 function getSymbolCoordinates(chunk) {
     return SYMBOLS[chunk] || { x: 0, y: 0 }; // If not found, return default coordinates
